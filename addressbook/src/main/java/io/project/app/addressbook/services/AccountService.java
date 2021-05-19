@@ -3,10 +3,10 @@ package io.project.app.addressbook.services;
 import io.project.app.addressbook.domain.Account;
 import io.project.app.addressbook.repositories.AccountRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -21,5 +21,10 @@ public class AccountService {
     
     public List<Account> findAll() {
         return accountRepository.findAll();
+    }
+    
+    public Optional<Account> create(Account account){
+        Account savedAccount = accountRepository.save(account);
+        return Optional.ofNullable(savedAccount);
     }
 }
