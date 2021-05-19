@@ -1,0 +1,6 @@
+io/project/app/addressbook/SwaggerConfig.class
+io/project/app/addressbook/AddressBookApplication.class
+io/project/app/addressbook/domain/Account.class
+io/project/app/addressbook/controller/AccountController.class
+io/project/app/addressbook/services/AccountService.class
+io/project/app/addressbook/repositories/AccountRepository.class
