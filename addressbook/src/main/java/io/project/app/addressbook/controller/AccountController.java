@@ -1,6 +1,7 @@
 package io.project.app.addressbook.controller;
 
 import io.project.app.addressbook.domain.Account;
+import io.project.app.addressbook.domainDTO.AccountDTO;
 import io.project.app.addressbook.services.AccountService;
 import java.util.List;
 import java.util.Optional;
@@ -34,8 +35,8 @@ public class AccountController {
     }
 
     @PostMapping(path = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createAccount(@RequestBody Account account) {
-        Optional<Account> createdAccount = accountService.create(account);
+    public ResponseEntity<?> createAccount(@RequestBody AccountDTO accountDTO) {
+        Optional<Account> createdAccount = accountService.create(accountDTO);
         return ResponseEntity.status(HttpStatus.OK).body(createdAccount);
     }
 

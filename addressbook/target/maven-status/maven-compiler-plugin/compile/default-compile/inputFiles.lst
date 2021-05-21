@@ -1,7 +1,9 @@
 /home/lilith/Downloads/address-book/addressbook/src/main/java/io/project/app/addressbook/controller/AccountController.java
+/home/lilith/Downloads/address-book/addressbook/src/main/java/io/project/app/addressbook/domainDTO/AccountDTO.java
 /home/lilith/Downloads/address-book/addressbook/src/main/java/io/project/app/addressbook/AddressBookApplication.java
 /home/lilith/Downloads/address-book/addressbook/src/main/java/io/project/app/addressbook/domain/Account.java
 /home/lilith/Downloads/address-book/addressbook/src/main/java/io/project/app/addressbook/SwaggerConfig.java
+/home/lilith/Downloads/address-book/addressbook/src/main/java/io/project/app/addressbook/domainDTO/AddressBookDTO.java
 /home/lilith/Downloads/address-book/addressbook/src/main/java/io/project/app/addressbook/domain/AddressBook.java
 /home/lilith/Downloads/address-book/addressbook/src/main/java/io/project/app/addressbook/repositories/AccountRepository.java
 /home/lilith/Downloads/address-book/addressbook/src/main/java/io/project/app/addressbook/services/AccountService.java
