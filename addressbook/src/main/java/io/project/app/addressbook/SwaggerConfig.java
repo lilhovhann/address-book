@@ -10,11 +10,9 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-
-
 /**
  *
- * @author lilit
+ * @author armdev
  */
 @Configuration
 @EnableSwagger2
@@ -22,8 +20,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("ADDRESS BOOK API")
-                .description("Telegram bot")
+                .title("HOSPITAL BOT API")
+                .description("From Zero to One ")
                 .termsOfServiceUrl("http://www-03.ibm.com/software/sla/sladb.nsf/sla/bm?Open")
                 .contact(new Contact("Lilit Hovhannisyan", "", ""))
                 .license("Apache License Version 2.0")
@@ -35,7 +33,7 @@ public class SwaggerConfig {
     @Bean
     public Docket personApi() {
         return new Docket(DocumentationType.SWAGGER_2).enable(true)
-                .groupName("Address-book")
+                .groupName("HOSPITAL BOT API")
                 .apiInfo(apiInfo())
                 .select()
                 .paths(regex("/api.*"))

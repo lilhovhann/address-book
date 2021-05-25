@@ -2,7 +2,7 @@
 #FROM mongo:4
 FROM registry.gitlab.com/armdev/dockers/mongodb
 #FROM axeledev.azurecr.io/axeledev/mongo:4
-MAINTAINER Armen Arzumanyan
+MAINTAINER Lilit Hovhannisyan
 
 # Add mongo user
 #RUN groupadd -r mongo && \

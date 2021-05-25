@@ -1,7 +1,7 @@
 package io.project.app.addressbook.services;
 
 import io.project.app.addressbook.domain.Account;
-import io.project.app.addressbook.domainDTO.AccountDTO;
+import io.project.app.addressbook.dto.AccountDTO;
 import io.project.app.addressbook.repositories.AccountRepository;
 import java.util.List;
 import java.util.Optional;
