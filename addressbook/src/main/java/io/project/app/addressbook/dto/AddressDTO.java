@@ -16,9 +16,7 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class AddressDTO {
 
-    private String chatId;
-
-    private long contact_id = System.currentTimeMillis();
+    private Long chatId;
 
     private String contactName;
 

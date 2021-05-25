@@ -90,14 +90,32 @@ public class Bot extends TelegramLongPollingBot {
 
             if (messageText.startsWith("/contact create")) {
                 String[] separated = messageText.split(" ");
-                addressDTO.setContact_id(chat_id);
-                addressDTO.setContactName(separated[2] + separated[3]);
+                addressDTO.setChatId(chat_id);
+                addressDTO.setContactName(separated[2] + " "+separated[3]);
                 addressDTO.setPhoneNumber(separated[4]);
+                addressDTO.setZoomId(separated[5]);
                 Optional<Address> savedAddress = addressService.createAddress(addressDTO);
                 if (savedAddress.isEmpty()) {
-                    sendMsg("address with that phone number "+ addressDTO.getPhoneNumber()+" already exists", chat_id);
+                    sendMsg("Contact with phone number " + addressDTO.getPhoneNumber() + " already exists", chat_id);
                 } else {
-                    sendMsg("You created address with phone number "+addressDTO.getPhoneNumber(), chat_id);
+                    sendMsg("You've created contact with phone number " + addressDTO.getPhoneNumber(), chat_id);
+                }
+
+            }
+
+            if (messageText.startsWith("/contact all")) {
+
+                List<Address> addressList = addressService.findAll();
+                if (addressList.isEmpty()) {
+                    sendMsg("There aren't any contacts yet", chat_id);
+                } else {
+                    for (Address addressItem : addressList) {
+                        sendMsg("Contact id: "+addressItem.getContact_id()+"\n"
+                                + "Contact name: "+addressItem.getContactName()+ "\n"
+                                + "Contact phone: "+addressItem.getPhoneNumber()+ "\n", chat_id);
+                       
+                    }
+
                 }
 
             }
