@@ -26,12 +26,37 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public Optional<Account> create(AccountDTO accountDTO) {
-
+    public Optional<Account> createAccount(AccountDTO accountDTO) {
+        log.info("AccountService: creating account");
         Account convertedData = convertEntityToDto(accountDTO);
-        final Account savedAccount = accountRepository.save(convertedData);
-        return Optional.ofNullable(savedAccount);
 
+        Optional<Account> findAccountByChatId = accountRepository.findByChatId(convertedData.getChatId());
+
+        if (findAccountByChatId.isPresent()) {
+            log.error("user with that chat id already exists, you should login instead");
+            return Optional.empty();
+        }
+
+        final Account savedAccount = accountRepository.save(convertedData);
+
+        return Optional.ofNullable(savedAccount);
+    }
+
+    public Optional<Account> login(AccountDTO accountDTO) {
+        log.info("login user" + accountDTO.getChatId());
+        Account convertedData = convertEntityToDto(accountDTO);
+        Optional<Account> existingUser = accountRepository.findByChatId(convertedData.getChatId());
+        if (!existingUser.isPresent()) {
+            log.error("Didn't found user, register instead");
+            return Optional.empty();
+        }
+
+        if (existingUser.isPresent()) {
+            log.info("User present");
+            return Optional.ofNullable(existingUser.get());
+        }
+
+        return Optional.empty();
     }
 
     public static AccountDTO convertEntityToDto(Account account) {
@@ -39,18 +64,18 @@ public class AccountService {
         try {
             BeanUtils.copyProperties(account, accountDTOResponse);
         } catch (BeansException e) {
-            throw new RuntimeException("Error creating doctorDTO response from Doctor", e);
+            throw new RuntimeException("Error creating AccountDTO response from Account", e);
         }
         return accountDTOResponse;
     }
 
     public static Account convertEntityToDto(AccountDTO accountDTO) {
-        Account doctorResponse = new Account();
+        Account accountResponse = new Account();
         try {
-            BeanUtils.copyProperties(accountDTO, doctorResponse);
+            BeanUtils.copyProperties(accountDTO, accountResponse);
         } catch (BeansException e) {
-            throw new RuntimeException("Error creating doctor from DoctorDto", e);
+            throw new RuntimeException("Error creating Account from AccountDTO", e);
         }
-        return doctorResponse;
+        return accountResponse;
     }
 }

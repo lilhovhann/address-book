@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
@@ -14,12 +15,13 @@ import org.springframework.data.annotation.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Document(collection = "Account")
 public class Account {
   
     @Id
     private String id;
     
-    private String chatId;
+    private Long chatId;
     
     private String firstname;
     

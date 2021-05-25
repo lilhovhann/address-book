@@ -34,10 +34,16 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.OK).body(savedAccounts);
     }
 
-    @PostMapping(path = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createAccount(@RequestBody AccountDTO accountDTO) {
-        Optional<Account> createdAccount = accountService.create(accountDTO);
+        Optional<Account> createdAccount = accountService.createAccount(accountDTO);
         return ResponseEntity.status(HttpStatus.OK).body(createdAccount);
+    }
+
+    @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> loginAccount(@RequestBody AccountDTO accountDTO) {
+        Optional<Account> loginAccount = accountService.login(accountDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(loginAccount);
     }
 
 }

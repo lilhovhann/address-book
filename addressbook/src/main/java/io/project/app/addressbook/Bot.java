@@ -1,7 +1,11 @@
 package io.project.app.addressbook;
 
 import io.project.app.addressbook.domain.Account;
+import io.project.app.addressbook.domain.Address;
+import io.project.app.addressbook.dto.AccountDTO;
+import io.project.app.addressbook.dto.AddressDTO;
 import io.project.app.addressbook.services.AccountService;
+import io.project.app.addressbook.services.AddressService;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -30,6 +34,9 @@ public class Bot extends TelegramLongPollingBot {
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    AddressService addressService;
+
     private static final Logger log = LoggerFactory.getLogger(Bot.class);
 
     public String getBotToken() {
@@ -45,28 +52,53 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         System.out.println(update.getMessage().getText());
         long chat_id = update.getMessage().getChatId();
+
+        AccountDTO accountDTO = new AccountDTO();
+        AddressDTO addressDTO = new AddressDTO();
         if (update.hasMessage()) {
             Message message = update.getMessage();
 
             String messageText = update.getMessage().getText();
 
-            if (messageText.startsWith("/find")) {
+            if (messageText.startsWith("/register")) {
                 String[] separated = messageText.split(" ");
-//                addressDTO.setChatId(chat_id);
-//                addressDTO.setContactName(separated[2] + " " + separated[3]);
-//                addressDTO.setPhoneNumber(Integer.parseInt(separated[5]));
-//                addressDTO.setZoomId(Integer.parseInt(separated[6]));
-//                String argument = "";
-//                for (int i = 0; i < messageText.length(); i++) {
-//                    if (i >= 9) {
-//                        argument += messageText.charAt(i);
-//                        System.out.println(argument);
-//                    }
-//                }
-                List<Account> account = accountService.findAll();
+                accountDTO.setChatId(chat_id);
+                accountDTO.setFirstname(separated[1]);
+                accountDTO.setFirstname(separated[2]);
+                Optional<Account> registeredAccount = accountService.createAccount(accountDTO);
+                if (registeredAccount.isEmpty()) {
+                    sendMsg("user with that chat id already exists, you should login instead", chat_id);
+                } else {
+                    sendMsg("You registered successfully", chat_id);
+                }
 
-                sendMsg("Accounts are " + account, chat_id);
-//                argument = "";
+            }
+
+            if (messageText.startsWith("/login")) {
+                String[] separated = messageText.split(" ");
+                accountDTO.setChatId(chat_id);
+                accountDTO.setFirstname(separated[1]);
+                accountDTO.setFirstname(separated[2]);
+                Optional<Account> loginedAccount = accountService.login(accountDTO);
+                if (loginedAccount.isEmpty()) {
+                    sendMsg("Didn't found user, register instead", chat_id);
+                } else {
+                    sendMsg("You logined successfully", chat_id);
+                }
+
+            }
+
+            if (messageText.startsWith("/contact create")) {
+                String[] separated = messageText.split(" ");
+                addressDTO.setContact_id(chat_id);
+                addressDTO.setContactName(separated[2] + separated[3]);
+                addressDTO.setPhoneNumber(separated[4]);
+                Optional<Address> savedAddress = addressService.createAddress(addressDTO);
+                if (savedAddress.isEmpty()) {
+                    sendMsg("address with that phone number "+ addressDTO.getPhoneNumber()+" already exists", chat_id);
+                } else {
+                    sendMsg("You created address with phone number "+addressDTO.getPhoneNumber(), chat_id);
+                }
 
             }
 
@@ -78,17 +110,9 @@ public class Bot extends TelegramLongPollingBot {
     public synchronized void sendMsg(String s, long chat_id) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chat_id + "");
-//        sendMessage.setText(s);
+        sendMessage.setText(s);
         sendMessage.setReplyMarkup(null);
-        sendMessage.enableHtml(true);
-        String text = "<b>Bold text</b>";
-        sendMessage.setText(text);
         execute(sendMessage);
-    }
-
-    @PostConstruct
-    public void start() {
-        log.info("Bot has started. Let's have fun");
     }
 
 }

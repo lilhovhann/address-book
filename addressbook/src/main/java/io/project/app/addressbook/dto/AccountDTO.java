@@ -17,7 +17,7 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class AccountDTO {
   
-    private String chatId;
+    private Long chatId;
     
     private String firstname;
     
