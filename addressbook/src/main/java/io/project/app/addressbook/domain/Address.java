@@ -22,7 +22,7 @@ public class Address {
 
     private long chatId;
 
-    private long contact_id = System.currentTimeMillis();
+    private long contactId;
 
     private String contactName;
 

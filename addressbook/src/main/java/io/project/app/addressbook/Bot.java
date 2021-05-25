@@ -91,7 +91,8 @@ public class Bot extends TelegramLongPollingBot {
             if (messageText.startsWith("/contact create")) {
                 String[] separated = messageText.split(" ");
                 addressDTO.setChatId(chat_id);
-                addressDTO.setContactName(separated[2] + " "+separated[3]);
+
+                addressDTO.setContactName(separated[2] + " " + separated[3]);
                 addressDTO.setPhoneNumber(separated[4]);
                 addressDTO.setZoomId(separated[5]);
                 Optional<Address> savedAddress = addressService.createAddress(addressDTO);
@@ -110,12 +111,31 @@ public class Bot extends TelegramLongPollingBot {
                     sendMsg("There aren't any contacts yet", chat_id);
                 } else {
                     for (Address addressItem : addressList) {
-                        sendMsg("Contact id: "+addressItem.getContact_id()+"\n"
-                                + "Contact name: "+addressItem.getContactName()+ "\n"
-                                + "Contact phone: "+addressItem.getPhoneNumber()+ "\n", chat_id);
-                       
+                        sendMsg("Contact id: " + addressItem.getContactId() + "\n"
+                                + "Contact name: " + addressItem.getContactName() + "\n"
+                                + "Contact phone: " + addressItem.getPhoneNumber() + "\n"
+                                + "Contact email: " + addressItem.getEmail()+ "\n"
+                                + "Contact register date: " + addressItem.getRecordDate() + "\n", chat_id);
+
                     }
 
+                }
+
+            }
+
+            if (messageText.startsWith("/contact update email")) {
+
+                String[] separated = messageText.split(" ");
+
+                addressDTO.setContactId(Long.parseLong(separated[3]));
+                addressDTO.setEmail(separated[4]);
+
+                Optional<Address> savedAddress = addressService.
+                        updateEmail(addressDTO.getContactId(), addressDTO.getEmail());
+                if (savedAddress.isEmpty()) {
+                    sendMsg("Contact with contact id " + addressDTO.getContactId() + " not found", chat_id);
+                } else {
+                    sendMsg("You've updated contact with contact id " + addressDTO.getContactId(), chat_id);
                 }
 
             }

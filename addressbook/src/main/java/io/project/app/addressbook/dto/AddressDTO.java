@@ -14,9 +14,11 @@ import org.springframework.data.annotation.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressDTO {
+public class AddressDTO extends DTO{
 
     private Long chatId;
+    
+    private Long contactId;
 
     private String contactName;
 

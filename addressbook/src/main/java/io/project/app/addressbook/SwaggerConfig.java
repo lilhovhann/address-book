@@ -20,7 +20,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("HOSPITAL BOT API")
+                .title("ADDRESSBOOK BOT API")
                 .description("From Zero to One ")
                 .termsOfServiceUrl("http://www-03.ibm.com/software/sla/sladb.nsf/sla/bm?Open")
                 .contact(new Contact("Lilit Hovhannisyan", "", ""))
@@ -33,7 +33,7 @@ public class SwaggerConfig {
     @Bean
     public Docket personApi() {
         return new Docket(DocumentationType.SWAGGER_2).enable(true)
-                .groupName("HOSPITAL BOT API")
+                .groupName("ADDRESSBOOK BOT  API")
                 .apiInfo(apiInfo())
                 .select()
                 .paths(regex("/api.*"))

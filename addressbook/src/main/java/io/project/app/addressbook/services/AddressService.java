@@ -4,6 +4,9 @@ import io.project.app.addressbook.domain.Account;
 import io.project.app.addressbook.domain.Address;
 import io.project.app.addressbook.dto.AccountDTO;
 import io.project.app.addressbook.dto.AddressDTO;
+import io.project.app.addressbook.dto.AddressUpdateEmailDTO;
+import io.project.app.addressbook.dto.AddressUpdateZoomidDTO;
+import io.project.app.addressbook.dto.DTO;
 import io.project.app.addressbook.repositories.AccountRepository;
 import io.project.app.addressbook.repositories.AddressRepository;
 import java.util.List;
@@ -31,7 +34,7 @@ public class AddressService {
 
     public Optional<Address> createAddress(AddressDTO addressDTO) {
         log.info("AccountService: creating account");
-        Address convertedData = convertEntityToDto(addressDTO);
+        Address convertedData = convertDtotoEntity(addressDTO);
 
         Optional<Address> findAddressByPhoneNumber = addressRepository.findByPhoneNumber(convertedData.getPhoneNumber());
 
@@ -39,12 +42,26 @@ public class AddressService {
             log.error("address with that phone number already exists");
             return Optional.empty();
         }
-
+        convertedData.setContactId(System.currentTimeMillis());
         final Address savedAddress = addressRepository.save(convertedData);
 
         return Optional.ofNullable(savedAddress);
     }
+
+
     
+    public Optional<Address> updateEmail(Long contactId, String email) {
+        Optional<Address> updatedEmail = addressRepository.findByContactId(contactId);
+        if (!updatedEmail.isPresent()) {
+            log.error("Contact with contact id "+contactId+" not found");
+            return Optional.empty();
+        }
+        Address existingAddress = updatedEmail.get();
+        existingAddress.setEmail(email);
+        Address updatedEmailAddress = addressRepository.save(existingAddress);
+        return Optional.of(updatedEmailAddress);
+    }
+
     public static AddressDTO convertEntityToDto(Address address) {
         AddressDTO addressDTOResponse = new AddressDTO();
         try {
@@ -55,10 +72,10 @@ public class AddressService {
         return addressDTOResponse;
     }
 
-    public static Address convertEntityToDto(AddressDTO addressDTO) {
+    public static Address convertDtotoEntity(DTO dto) {
         Address addressResponse = new Address();
         try {
-            BeanUtils.copyProperties(addressDTO, addressResponse);
+            BeanUtils.copyProperties(dto, addressResponse);
         } catch (BeansException e) {
             throw new RuntimeException("Error creating Address from AddressDTO", e);
         }

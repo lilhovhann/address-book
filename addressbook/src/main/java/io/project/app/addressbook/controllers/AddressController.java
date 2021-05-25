@@ -4,6 +4,7 @@ import io.project.app.addressbook.domain.Account;
 import io.project.app.addressbook.domain.Address;
 import io.project.app.addressbook.dto.AccountDTO;
 import io.project.app.addressbook.dto.AddressDTO;
+import io.project.app.addressbook.dto.AddressUpdateEmailDTO;
 import io.project.app.addressbook.services.AccountService;
 import io.project.app.addressbook.services.AddressService;
 import java.util.List;
@@ -15,8 +16,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -39,10 +42,14 @@ public class AddressController {
 
     @PostMapping(path = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createAddress(@RequestBody AddressDTO addressDTO) {
-        Optional<Address> createdAddress= addressService.createAddress(addressDTO);
+        Optional<Address> createdAddress = addressService.createAddress(addressDTO);
         return ResponseEntity.status(HttpStatus.OK).body(createdAddress);
     }
 
-   
+    @PutMapping(path = "/update/email", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateEmail(@RequestParam Long contactId, @RequestParam String email) {
+        Optional<Address> updatedEmailAddress = addressService.updateEmail(contactId, email);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedEmailAddress);
+    }
 
 }
