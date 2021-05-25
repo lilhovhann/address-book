@@ -60,11 +60,25 @@ public class Bot extends TelegramLongPollingBot {
 
             String messageText = update.getMessage().getText();
 
+            if (messageText.startsWith("/help")) {
+
+                sendMsg("Here is the functionality of this bot \n"
+                        + "/register firstname lastname: creates new account \n"
+                        + "/login firstname lastname: logins to existing account \n"
+                        + "/contact create firstname lastname phone zoom: creates new contact \n"
+                        + "/contact update email contactId email: updates email of that contact \n"
+                        + "/contact update zoom  contactId zoom: updates zoom of that contact \n"
+                        + "/contact delete contactId: deletes that contact \n"
+                        + "/contact all: finds all contacts \n"
+                        + "/contact search firstname lastname: searches by name of contact \n", chat_id);
+
+            }
+
             if (messageText.startsWith("/register")) {
                 String[] separated = messageText.split(" ");
                 accountDTO.setChatId(chat_id);
                 accountDTO.setFirstname(separated[1]);
-                accountDTO.setFirstname(separated[2]);
+                accountDTO.setLastname(separated[2]);
                 Optional<Account> registeredAccount = accountService.createAccount(accountDTO);
                 if (registeredAccount.isEmpty()) {
                     sendMsg("user with that chat id already exists, you should login instead", chat_id);
@@ -175,18 +189,18 @@ public class Bot extends TelegramLongPollingBot {
             if (messageText.startsWith("/contact search")) {
                 String[] separated = messageText.split(" ");
 
-                addressDTO.setContactName(separated[2]+" "+separated[3]);
+                addressDTO.setContactName(separated[2] + " " + separated[3]);
 
                 Optional<Address> search = addressService.findByName(addressDTO.getContactName());
                 if (search.isEmpty()) {
-                    sendMsg("Contact with contact name " + addressDTO.getContactName()+ " not found", chat_id);
+                    sendMsg("Contact with contact name " + addressDTO.getContactName() + " not found", chat_id);
                 } else {
                     sendMsg("Contact id: " + search.get().getContactId() + "\n"
-                                + "Contact name: " + search.get().getContactName() + "\n"
-                                + "Contact phone: " + search.get().getPhoneNumber() + "\n"
-                                + "Contact email: " + search.get().getEmail() + "\n"
-                                + "Contact zoom id: " + search.get().getZoomId() + "\n"
-                                + "Contact register date: " + search.get().getRecordDate() + "\n", chat_id);
+                            + "Contact name: " + search.get().getContactName() + "\n"
+                            + "Contact phone: " + search.get().getPhoneNumber() + "\n"
+                            + "Contact email: " + search.get().getEmail() + "\n"
+                            + "Contact zoom id: " + search.get().getZoomId() + "\n"
+                            + "Contact register date: " + search.get().getRecordDate() + "\n", chat_id);
 
                 }
 
