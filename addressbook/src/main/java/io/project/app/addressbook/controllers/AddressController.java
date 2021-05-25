@@ -52,4 +52,9 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.OK).body(updatedEmailAddress);
     }
 
+    @PutMapping(path = "/update/zoom", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateZoom(@RequestParam Long contactId, @RequestParam String zoomId) {
+        Optional<Address> updatedEmailAddress = addressService.updateEmail(contactId, zoomId);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedEmailAddress);
+    }
 }

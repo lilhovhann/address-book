@@ -14,6 +14,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface AddressRepository extends MongoRepository<Address, String> {
     Optional<Address> findByPhoneNumber(String phoneNumber);
     Optional<Address> findByContactId(Long contactId);
+    Optional<Address> findByContactName(String contactName);
+    Optional<Address> deleteByContactId(Long contactId);
+
 
  
 }

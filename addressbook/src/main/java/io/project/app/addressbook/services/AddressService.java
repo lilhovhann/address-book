@@ -33,7 +33,8 @@ public class AddressService {
     }
 
     public Optional<Address> createAddress(AddressDTO addressDTO) {
-        log.info("AccountService: creating account");
+        log.info("AddressService: creating address");
+        addressDTO.setContactId(System.currentTimeMillis());
         Address convertedData = convertDtotoEntity(addressDTO);
 
         Optional<Address> findAddressByPhoneNumber = addressRepository.findByPhoneNumber(convertedData.getPhoneNumber());
@@ -42,24 +43,55 @@ public class AddressService {
             log.error("address with that phone number already exists");
             return Optional.empty();
         }
-        convertedData.setContactId(System.currentTimeMillis());
         final Address savedAddress = addressRepository.save(convertedData);
 
         return Optional.ofNullable(savedAddress);
     }
 
-
-    
     public Optional<Address> updateEmail(Long contactId, String email) {
         Optional<Address> updatedEmail = addressRepository.findByContactId(contactId);
         if (!updatedEmail.isPresent()) {
-            log.error("Contact with contact id "+contactId+" not found");
+            log.error("Contact with contact id " + contactId + " not found");
             return Optional.empty();
         }
         Address existingAddress = updatedEmail.get();
         existingAddress.setEmail(email);
         Address updatedEmailAddress = addressRepository.save(existingAddress);
         return Optional.of(updatedEmailAddress);
+    }
+
+    public Optional<Address> updateZoom(Long contactId, String zoomId) {
+        Optional<Address> updatedEmail = addressRepository.findByContactId(contactId);
+        if (!updatedEmail.isPresent()) {
+            log.error("Contact with contact id " + contactId + " not found");
+            return Optional.empty();
+        }
+        Address existingAddress = updatedEmail.get();
+        existingAddress.setZoomId(zoomId);
+        Address updatedEmailAddress = addressRepository.save(existingAddress);
+        return Optional.of(updatedEmailAddress);
+    }
+
+    public String delete(Long contactId) {
+        Optional<Address> updatedEmail = addressRepository.findByContactId(contactId);
+        if (!updatedEmail.isPresent()) {
+            log.error("Contact with contact id " + contactId + " not found");
+            return "Contact not found";
+        }
+        Address existingAddress = updatedEmail.get();
+        addressRepository.deleteByContactId(existingAddress.getContactId());
+
+        return "deleted successfully";
+    }
+
+    public Optional<Address> findByName(String contactName) {
+        Optional<Address> foundContact = addressRepository.findByContactName(contactName);
+        if (!foundContact.isPresent()) {
+            log.error("Contact with contact name " + contactName + " not found");
+            return Optional.empty();
+        }
+       
+        return foundContact;
     }
 
     public static AddressDTO convertEntityToDto(Address address) {
@@ -72,10 +104,10 @@ public class AddressService {
         return addressDTOResponse;
     }
 
-    public static Address convertDtotoEntity(DTO dto) {
+    public static Address convertDtotoEntity(AddressDTO addressDTO) {
         Address addressResponse = new Address();
         try {
-            BeanUtils.copyProperties(dto, addressResponse);
+            BeanUtils.copyProperties(addressDTO, addressResponse);
         } catch (BeansException e) {
             throw new RuntimeException("Error creating Address from AddressDTO", e);
         }

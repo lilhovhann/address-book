@@ -114,7 +114,8 @@ public class Bot extends TelegramLongPollingBot {
                         sendMsg("Contact id: " + addressItem.getContactId() + "\n"
                                 + "Contact name: " + addressItem.getContactName() + "\n"
                                 + "Contact phone: " + addressItem.getPhoneNumber() + "\n"
-                                + "Contact email: " + addressItem.getEmail()+ "\n"
+                                + "Contact email: " + addressItem.getEmail() + "\n"
+                                + "Contact zoom id: " + addressItem.getZoomId() + "\n"
                                 + "Contact register date: " + addressItem.getRecordDate() + "\n", chat_id);
 
                     }
@@ -136,6 +137,57 @@ public class Bot extends TelegramLongPollingBot {
                     sendMsg("Contact with contact id " + addressDTO.getContactId() + " not found", chat_id);
                 } else {
                     sendMsg("You've updated contact with contact id " + addressDTO.getContactId(), chat_id);
+                }
+
+            }
+
+            if (messageText.startsWith("/contact update zoom")) {
+
+                String[] separated = messageText.split(" ");
+
+                addressDTO.setContactId(Long.parseLong(separated[3]));
+                addressDTO.setZoomId(separated[4]);
+
+                Optional<Address> savedAddress = addressService.
+                        updateZoom(addressDTO.getContactId(), addressDTO.getZoomId());
+                if (savedAddress.isEmpty()) {
+                    sendMsg("Contact with contact id " + addressDTO.getContactId() + " not found", chat_id);
+                } else {
+                    sendMsg("You've updated contact with contact id " + addressDTO.getContactId(), chat_id);
+                }
+
+            }
+
+            if (messageText.startsWith("/contact delete")) {
+                String[] separated = messageText.split(" ");
+
+                addressDTO.setContactId(Long.parseLong(separated[2]));
+
+                String deletion = addressService.delete(addressDTO.getContactId());
+                if (deletion.equalsIgnoreCase("Contact not found")) {
+                    sendMsg("Contact with contactId " + addressDTO.getContactId() + " not found", chat_id);
+                } else {
+                    sendMsg("You've deleted contact with contactId " + addressDTO.getContactId(), chat_id);
+                }
+
+            }
+
+            if (messageText.startsWith("/contact search")) {
+                String[] separated = messageText.split(" ");
+
+                addressDTO.setContactName(separated[2]+" "+separated[3]);
+
+                Optional<Address> search = addressService.findByName(addressDTO.getContactName());
+                if (search.isEmpty()) {
+                    sendMsg("Contact with contact name " + addressDTO.getContactName()+ " not found", chat_id);
+                } else {
+                    sendMsg("Contact id: " + search.get().getContactId() + "\n"
+                                + "Contact name: " + search.get().getContactName() + "\n"
+                                + "Contact phone: " + search.get().getPhoneNumber() + "\n"
+                                + "Contact email: " + search.get().getEmail() + "\n"
+                                + "Contact zoom id: " + search.get().getZoomId() + "\n"
+                                + "Contact register date: " + search.get().getRecordDate() + "\n", chat_id);
+
                 }
 
             }
