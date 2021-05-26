@@ -23,7 +23,7 @@ Telegram bot allows subscribers create and manage their own address book
 
 ## Actions
 
-**/help** - shows all available commands
+**/help** - shows all available commands<br>
 ![image](https://user-images.githubusercontent.com/58720754/119659228-06216100-be3f-11eb-8487-c181f222e85d.png)
 
 
