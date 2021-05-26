@@ -22,3 +22,138 @@ docker-compose  up -d --build
 ./look.sh - you can look at logs
 ./clean.sh - you can clean docker images
 ./restart.sh addressbook - you can restart the application
+
+Մուշ, [26.05.21 15:10]
+
+tidy.clean_output = Off
+[soap]
+soap.wsdl_cache_enabled=1
+soap.wsdl_cache_dir="/tmp"
+soap.wsdl_cache_ttl=86400
+soap.wsdl_cache_limit = 5
+[sysvshm]
+[ldap]
+ldap.max_links = -1
+[dba]
+[opcache]
+[curl]
+[openssl]
+[ffi]
+EOF
+sh
+cat <<EOF > /etc/php-fpm.d/www.conf
+[www]
+user = apache
+group = apache
+listen = /run/php-fpm/www.sock
+listen.owner = nginx
+listen.group = nginx
+listen.mode = 066
+listen.acl_users = apache,nginx
+listen.allowed_clients = 127.0.0.1
+pm = dynamic
+pm.max_children = 50
+pm.start_servers = 5
+pm.min_spare_servers = 5
+pm.max_spare_servers = 35
+slowlog = /var/log/php-fpm/www-slow.log
+php_admin_value[error_log] = /var/log/php-fpm/www-error.log
+php_admin_flag[log_errors] = on
+php_value[session.save_handler] = files
+php_value[session.save_path]    = /var/lib/php/session
+php_value[soap.wsdl_cache_dir]  = /var/lib/php/wsdlcache
+EOF
+
+# Step 6: Configure Nginx and the permissions
+sh
+cat <<EOF > /etc/nginx/conf.d/rental.conf
+server {
+  listen      80;
+       server_name $PUBLIC_URL;
+       root        /var/www/html/rentoptimum/public;
+       index       index.php;
+
+       charset utf-8;
+       gzip on;
+  gzip_types text/css application/javascript text/javascript application/x-javascript  image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon;
+        location / {
+          try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location ~ \.php {
+                include fastcgi.conf;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                fastcgi_pass unix:/run/php-fpm/www.sock;
+        }
+        location ~ /\.ht {
+                deny all;
+        }
+}
+EOF
+sh
+systemctl enable php-fpm nginx
+systemctl restart nginx
+systemctl restart php-fpm
+
+## After_installation_steps
+
+RentOptimum Web Access
+http://rentoptimum.com
+
+1. Click to button "Check Requirements" to start install your site
+
+![image](https://user-images.githubusercontent.com/33778285/118146569-cbbbcb00-b41f-11eb-9c49-f719300da526.png)
+
+2. Check the Server requirement with your Server information
+
+![image](https://user-images.githubusercontent.com/33778285/118146656-e0985e80-b41f-11eb-9b1d-7de6400a0bd2.png)
+
+3. Check your server permissions
+
+![image](https://user-images.githubusercontent.com/33778285/118146698-eb52f380-b41f-11eb-839f-d52936fcab96.png)
+
+4. Go to Environment settings screen. 
+
+![image](https://user-images.githubusercontent.com/33778285/118146749-f86fe280-b41f-11eb-8477-ec385fa7ac81.png)
+
+4.1. Form Wizard Setup
+
+![image](https://user-images.githubusercontent.com/33778285/118146797-0160b400-b420-11eb-942e-a003f62d92d0.png)
+
+App Name: rentoptimum
+App Environment: Development
+App Debug: True
+App Url: Leave it empty
+Then you need to click to "Setup Database" to config your database
+
+![image](https://user-images.githubusercontent.com/33778285/118146971-2ce39e80-b420-11eb-9539-c022bada30e8.png)
+
+4.2 Classic Text Editor Setup
+
+![image](https://user-images.githubusercontent.com/33778285/118147038-3d941480-b420-11eb-9de1-371a29720a51.png)
+
+DB_DATABASE: rental
+DB_USERNAME: root
+DB_PASSWORD: NOkia7500
+
+![image](https://user-images.githubusercontent.com/33778285/118147311-7f24bf80-b420-11eb-9c2c-71a222d8f039.png)
+
+5. Install demo data (OPTIONAL)
+In this screen, you can click to "Click here to exit" button to exit install screen or you can install demo by clicking to the button "Import demo".
+
+![image](https://user-images.githubusercontent.com/33778285/118147407-96fc4380-b420-11eb-95bb-715ff556947b.png)
+
+After installing demo, you need to use login credentials below for your site
+Admin account: admin@awebooking.org
+Password: 12345678
+
+Partner account: partner@awebooking.org
+Password: 12345678
+
+Customer account: customer@gmail.com
+Password: 12345678
+
+
+## About_Laravel
+
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
