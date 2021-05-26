@@ -31,6 +31,10 @@ public class Address {
     private String phoneNumber;
     
     private String zoomId;
+    
+    private String gender;
+    
+    private String proffession;
 
     private LocalDateTime recordDate = LocalDateTime.now();
 

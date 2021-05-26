@@ -4,8 +4,6 @@ import io.project.app.addressbook.domain.Account;
 import io.project.app.addressbook.domain.Address;
 import io.project.app.addressbook.dto.AccountDTO;
 import io.project.app.addressbook.dto.AddressDTO;
-import io.project.app.addressbook.dto.AddressUpdateEmailDTO;
-import io.project.app.addressbook.services.AccountService;
 import io.project.app.addressbook.services.AddressService;
 import java.util.List;
 import java.util.Optional;

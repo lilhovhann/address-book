@@ -1,13 +1,7 @@
 package io.project.app.addressbook.services;
 
-import io.project.app.addressbook.domain.Account;
 import io.project.app.addressbook.domain.Address;
-import io.project.app.addressbook.dto.AccountDTO;
 import io.project.app.addressbook.dto.AddressDTO;
-import io.project.app.addressbook.dto.AddressUpdateEmailDTO;
-import io.project.app.addressbook.dto.AddressUpdateZoomidDTO;
-import io.project.app.addressbook.dto.DTO;
-import io.project.app.addressbook.repositories.AccountRepository;
 import io.project.app.addressbook.repositories.AddressRepository;
 import java.util.List;
 import java.util.Optional;
@@ -72,6 +66,30 @@ public class AddressService {
         return Optional.of(updatedEmailAddress);
     }
 
+    public Optional<Address> updateGender(Long contactId, String gender) {
+        Optional<Address> updatedEmail = addressRepository.findByContactId(contactId);
+        if (!updatedEmail.isPresent()) {
+            log.error("Contact with contact id " + contactId + " not found");
+            return Optional.empty();
+        }
+        Address existingAddress = updatedEmail.get();
+        existingAddress.setZoomId(gender);
+        Address updatedEmailAddress = addressRepository.save(existingAddress);
+        return Optional.of(updatedEmailAddress);
+    }
+
+    public Optional<Address> updateProfession(Long contactId, String profession) {
+        Optional<Address> updatedEmail = addressRepository.findByContactId(contactId);
+        if (!updatedEmail.isPresent()) {
+            log.error("Contact with contact id " + contactId + " not found");
+            return Optional.empty();
+        }
+        Address existingAddress = updatedEmail.get();
+        existingAddress.setZoomId(profession);
+        Address updatedEmailAddress = addressRepository.save(existingAddress);
+        return Optional.of(updatedEmailAddress);
+    }
+
     public String delete(Long contactId) {
         Optional<Address> updatedEmail = addressRepository.findByContactId(contactId);
         if (!updatedEmail.isPresent()) {
@@ -90,7 +108,17 @@ public class AddressService {
             log.error("Contact with contact name " + contactName + " not found");
             return Optional.empty();
         }
-       
+
+        return foundContact;
+    }
+
+    public Optional<List<Address>> findByGender(String gender) {
+        Optional<List<Address>>foundContact = addressRepository.findByGender(gender);
+        if (!foundContact.isPresent()) {
+            log.error("Contact with gender" + gender + " not found");
+            return Optional.empty();
+        }
+
         return foundContact;
     }
 

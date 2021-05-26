@@ -14,10 +14,10 @@ import org.springframework.data.annotation.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressDTO extends DTO{
+public class AddressDTO extends DTO {
 
     private Long chatId;
-    
+
     private Long contactId;
 
     private String contactName;
@@ -25,8 +25,12 @@ public class AddressDTO extends DTO{
     private String email;
 
     private String phoneNumber;
-    
+
     private String zoomId;
+
+    private String gender;
+
+    private String proffession;
 
     private LocalDateTime recordDate = LocalDateTime.now();
 
