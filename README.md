@@ -23,46 +23,6 @@ docker-compose  up -d --build
 ./clean.sh - you can clean docker images
 ./restart.sh addressbook - you can restart the application
 
-Մուշ, [26.05.21 15:10]
-
-tidy.clean_output = Off
-[soap]
-soap.wsdl_cache_enabled=1
-soap.wsdl_cache_dir="/tmp"
-soap.wsdl_cache_ttl=86400
-soap.wsdl_cache_limit = 5
-[sysvshm]
-[ldap]
-ldap.max_links = -1
-[dba]
-[opcache]
-[curl]
-[openssl]
-[ffi]
-EOF
-sh
-cat <<EOF > /etc/php-fpm.d/www.conf
-[www]
-user = apache
-group = apache
-listen = /run/php-fpm/www.sock
-listen.owner = nginx
-listen.group = nginx
-listen.mode = 066
-listen.acl_users = apache,nginx
-listen.allowed_clients = 127.0.0.1
-pm = dynamic
-pm.max_children = 50
-pm.start_servers = 5
-pm.min_spare_servers = 5
-pm.max_spare_servers = 35
-slowlog = /var/log/php-fpm/www-slow.log
-php_admin_value[error_log] = /var/log/php-fpm/www-error.log
-php_admin_flag[log_errors] = on
-php_value[session.save_handler] = files
-php_value[session.save_path]    = /var/lib/php/session
-php_value[soap.wsdl_cache_dir]  = /var/lib/php/wsdlcache
-EOF
 
 # Step 6: Configure Nginx and the permissions
 sh
