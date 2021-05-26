@@ -55,12 +55,12 @@ public class AddressService {
     }
 
     public Optional<Address> updateZoom(Long contactId, String zoomId) {
-        Optional<Address> updatedEmail = addressRepository.findByContactId(contactId);
-        if (!updatedEmail.isPresent()) {
+        Optional<Address> updatedZoom = addressRepository.findByContactId(contactId);
+        if (!updatedZoom.isPresent()) {
             log.error("Contact with contact id " + contactId + " not found");
             return Optional.empty();
         }
-        Address existingAddress = updatedEmail.get();
+        Address existingAddress = updatedZoom.get();
         existingAddress.setZoomId(zoomId);
         Address updatedEmailAddress = addressRepository.save(existingAddress);
         return Optional.of(updatedEmailAddress);
