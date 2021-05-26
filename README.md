@@ -24,14 +24,10 @@ docker-compose  up -d --build
 ./restart.sh addressbook - you can restart the application
 
 
-# Step 6: Configure Nginx and the permissions
-sh
-cat <<EOF > /etc/nginx/conf.d/rental.conf
-server {
-  listen      80;
-       server_name $PUBLIC_URL;
-       root        /var/www/html/rentoptimum/public;
-       index       index.php;
+# Telegram Bot: Spring boot application
+
+Telegram bot allows subscribers create and manage their own address book
+
 
        charset utf-8;
        gzip on;
