@@ -39,16 +39,19 @@ Telegram bot allows subscribers create and manage their own address book
 ![image](https://user-images.githubusercontent.com/58720754/119661737-a5dfee80-be41-11eb-93d0-c024081528a8.png)
 
 
-#How to run
+# How to run
 
-Run with docker with typing this command in terminal
+### Run with docker with typing this command in terminal
 
        sudo docker-compose  up -d --build 
 
-EOF
-sh
-systemctl enable php-fpm nginx
-systemctl restart nginx
-systemctl restart php-fpm
+### See the output logs with running this script
+
+       sudo ./look.sh addressbook
+
+### Clean docker containers with running this script
+
+     sudo ./clean.sh 
+
 
 
