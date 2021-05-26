@@ -1,12 +1,3 @@
-**RUN**
-docker-compose  up -d --build 
-
-**Scripts**
-./look.sh - you can look at logs
-./clean.sh - you can clean docker images
-./restart.sh addressbook - you can restart the application
-
-
 # Telegram Bot: Spring boot application with MongoDB
 
 Telegram bot allows subscribers create and manage their own address book
@@ -52,6 +43,9 @@ Telegram bot allows subscribers create and manage their own address book
 ### Clean docker containers with running this script
 
      sudo ./clean.sh 
+     
+### Restart the application with running this script     
+      sudo ./clean.sh addressbook
 
 
 
