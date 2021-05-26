@@ -49,7 +49,7 @@ Telegram bot allows subscribers create and manage their own address book
 
 # Telegram bot token
 
-Generate your own bot token with @BotFather (search this in telegram) 
+Generate your own bot token with @BotFather (search this in telegram) and put it in Bot.java file
 **/newbot**
 ![image](https://user-images.githubusercontent.com/58720754/119662742-c3fa1e80-be42-11eb-9490-201e07695f67.png)
 
