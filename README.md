@@ -1,10 +1,3 @@
-TELEGRAM BOT
-
-Application:
-Spring boot application with MongoDB.
-Java packages: io.project.app.addressbook
-**Logic:**
-Telegram bot allows subscribers create and manage their own address book.
 
 Actions:
 
@@ -24,13 +17,18 @@ docker-compose  up -d --build
 ./restart.sh addressbook - you can restart the application
 
 
-# Telegram Bot: Spring boot application
+# Telegram Bot: Spring boot application with MongoDB
 
 Telegram bot allows subscribers create and manage their own address book
 
+## Actions
 
-       charset utf-8;
-       gzip on;
+**/help** - shows all available commands
+![image](https://user-images.githubusercontent.com/58720754/119659228-06216100-be3f-11eb-8487-c181f222e85d.png)
+
+
+
+       
   gzip_types text/css application/javascript text/javascript application/x-javascript  image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon;
         location / {
           try_files $uri $uri/ /index.php?$query_string;
@@ -52,6 +50,8 @@ systemctl restart nginx
 systemctl restart php-fpm
 
 ## After_installation_steps
+![Uploading image.png…]()
+
 
 RentOptimum Web Access
 http://rentoptimum.com
