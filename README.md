@@ -36,6 +36,13 @@ Telegram bot allows subscribers create and manage their own address book
 **4. /contact all**  - shows all contacts that you've created<br><br>
 ![image](https://user-images.githubusercontent.com/58720754/119660836-bcd21100-be40-11eb-8fd2-ec56bbad0f65.png)
 
+**5. /contact update email contactId email** - updates email of that contact 
+![image](https://user-images.githubusercontent.com/58720754/119661275-2d792d80-be41-11eb-9d0a-e449fd1e8cb0.png)
+
+**6. /contact update zoom contactId zoomID** - updates zoom of that contact 
+![image](https://user-images.githubusercontent.com/58720754/119661396-513c7380-be41-11eb-880d-2ecc29338e4c.png)
+
+
        
   gzip_types text/css application/javascript text/javascript application/x-javascript  image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon;
         location / {
