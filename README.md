@@ -30,6 +30,11 @@ Telegram bot allows subscribers create and manage their own address book
 **3. /login** - logins the user with chat ID<br><br>
 ![image](https://user-images.githubusercontent.com/58720754/119660249-1554de80-be40-11eb-93dc-20a584be2cba.png)
 
+**3. /contact create firstname lastname phone zoomID** - creates new contact<br><br>
+![image](https://user-images.githubusercontent.com/58720754/119660629-87c5be80-be40-11eb-87c5-852f5ae93f3a.png)
+
+**4. /contact all**  - shows all contacts that you've created<br><br>
+![image](https://user-images.githubusercontent.com/58720754/119660836-bcd21100-be40-11eb-8fd2-ec56bbad0f65.png)
 
        
   gzip_types text/css application/javascript text/javascript application/x-javascript  image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon;
