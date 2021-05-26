@@ -23,11 +23,11 @@ Telegram bot allows subscribers create and manage their own address book
 
 ## Actions
 
-**/help** - shows all available commands<br><br>
+**1. /help** - shows all available commands<br><br>
 ![image](https://user-images.githubusercontent.com/58720754/119659228-06216100-be3f-11eb-8487-c181f222e85d.png)
 
-/register - registers new user with chat ID<br>
-/login - logins the user with chat ID<br><br>
+**2. /register** - registers new user with chat ID<br>
+**3. /login** - logins the user with chat ID<br><br>
 ![image](https://user-images.githubusercontent.com/58720754/119660249-1554de80-be40-11eb-93dc-20a584be2cba.png)
 
 
