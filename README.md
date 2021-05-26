@@ -38,21 +38,13 @@ Telegram bot allows subscribers create and manage their own address book
 **8. /contact search firstname lastname** -  searches by name of contact
 ![image](https://user-images.githubusercontent.com/58720754/119661737-a5dfee80-be41-11eb-93d0-c024081528a8.png)
 
-       
-  gzip_types text/css application/javascript text/javascript application/x-javascript  image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon;
-        location / {
-          try_files $uri $uri/ /index.php?$query_string;
-        }
 
-        location ~ \.php {
-                include fastcgi.conf;
-                fastcgi_split_path_info ^(.+\.php)(/.+)$;
-                fastcgi_pass unix:/run/php-fpm/www.sock;
-        }
-        location ~ /\.ht {
-                deny all;
-        }
-}
+#How to run
+
+Run with docker with typing this command in terminal
+
+       sudo docker-compose  up -d --build 
+
 EOF
 sh
 systemctl enable php-fpm nginx
