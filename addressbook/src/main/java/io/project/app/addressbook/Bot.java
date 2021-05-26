@@ -40,12 +40,14 @@ public class Bot extends TelegramLongPollingBot {
     private static final Logger log = LoggerFactory.getLogger(Bot.class);
 
     public String getBotToken() {
-        return "1757709513:AAH1v2ZwALWfemS-Cb6V5fsoPaNnBaQw6XY";
+        //put your telegram bot token here
+        return "11111111111111111";
     }
 
     @Override
     public String getBotUsername() {
-        return "optym_bot";
+        //put your telegram bot username here
+        return "sample_bot";
     }
 
     @Override
