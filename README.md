@@ -45,7 +45,7 @@ Telegram bot allows subscribers create and manage their own address book
      sudo ./clean.sh 
      
 ### Restart the application with running this script     
-      sudo ./clean.sh addressbook
+      sudo ./restart.sh addressbook
 
 # Telegram bot token
 
